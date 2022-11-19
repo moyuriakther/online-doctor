@@ -9,7 +9,7 @@ const AvailableAppointment = ({ date }) => {
   const [treatment, setTreatment] = useState(null);
   useEffect(() => {
     axios
-      .get("appointmentOptions.json")
+      .get("http://localhost:5000/appointment")
       .then((res) => setAppointmentOptions(res.data));
   }, []);
   return (

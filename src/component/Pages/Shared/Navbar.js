@@ -1,7 +1,15 @@
 import React from "react";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from "../../../firebase.config";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Navbar = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const [signOut, signOutLoading, signOutError] = useSignOut(auth);
+  if (loading || signOutLoading) {
+    return <LoadingSpinner />;
+  }
   const menuItems = (
     <>
       <li>
@@ -20,7 +28,13 @@ const Navbar = () => {
         <Link to="/contact">Contact Us</Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        {user ? (
+          <Link onClick={signOut} to="/">
+            Sign Out
+          </Link>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
       </li>
     </>
   );

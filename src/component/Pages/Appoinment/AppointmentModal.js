@@ -1,7 +1,11 @@
+import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.config";
 
 const AppointmentModal = ({ date, treatment, setTreatment }) => {
+  const [user, loading, error] = useAuthState(auth);
   const { name, slots } = treatment;
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,6 +15,9 @@ const AppointmentModal = ({ date, treatment, setTreatment }) => {
     const email = e.target.email.value;
     console.log(name, slot, phone, email);
     setTreatment(null);
+    axios
+      .post("http://localhost:5000/appointment")
+      .then((res) => console.log(res));
   };
   return (
     <div>
@@ -42,8 +49,10 @@ const AppointmentModal = ({ date, treatment, setTreatment }) => {
                 name="slot"
                 className="select select-bordered w-full max-w-xs"
               >
-                {slots.map((slot) => (
-                  <option value={slot}>{slot}</option>
+                {slots.map((slot, index) => (
+                  <option key={index} value={slot}>
+                    {slot}
+                  </option>
                 ))}
               </select>
             </div>
@@ -54,6 +63,19 @@ const AppointmentModal = ({ date, treatment, setTreatment }) => {
                 name="name"
                 type="text"
                 placeholder="Full Name"
+                value={user?.displayName}
+                readOnly
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={user?.email}
+                readOnly
               />
             </div>
             <div className="mb-4">
@@ -65,15 +87,7 @@ const AppointmentModal = ({ date, treatment, setTreatment }) => {
                 placeholder="Phone Number"
               />
             </div>
-            <div className="mb-4">
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Email"
-              />
-            </div>
+
             <div className="">
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 bg-gradient-to-r from-secondary to-primary text-white leading-tight focus:outline-none focus:shadow-outline"
