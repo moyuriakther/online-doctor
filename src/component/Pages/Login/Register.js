@@ -9,6 +9,8 @@ import {
 } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const Register = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -31,10 +33,10 @@ const Register = () => {
     const success = await updateProfile({ displayName: data.name });
     const verifyEmail = await sendEmailVerification();
     if (verifyEmail) {
-      alert("Sent email");
+      toast("Sent verification email");
     }
     if (success) {
-      alert("Updated profile");
+      toast("Updated profile");
     }
   };
   useEffect(() => {
@@ -55,7 +57,7 @@ const Register = () => {
     return <LoadingSpinner />;
   }
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-full">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Register</h2>

@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.config";
 import {
+  useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, eUser, eLoading, eError] =
     useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, rSending, rError] =
+    useSendPasswordResetEmail(auth);
+  const [email, setEmail] = useState();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -21,29 +26,34 @@ const Login = () => {
     handleSubmit,
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     signInWithEmailAndPassword(data.email, data.password);
+  };
+  const handleForgotPassword = async () => {
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast("Sent reset email");
+    } else {
+      toast("Provide an email address");
+    }
   };
 
   useEffect(() => {
     if (gUser || eUser) {
-      console.log(gUser, eUser);
       navigate(from, { replace: true });
     }
   }, [gUser, eUser, from, navigate]);
 
   let signInError;
-  if (gError || eError) {
-    console.log(gError, eError);
+  if (gError || eError || rError) {
     signInError = (
       <p className="text-red-600">{gError?.message || eError?.message}</p>
     );
   }
-  if (gLoading || eLoading) {
+  if (gLoading || eLoading || rSending) {
     return <LoadingSpinner />;
   }
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-full">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Login</h2>
@@ -62,6 +72,7 @@ const Login = () => {
                     value: /.+@.+\.[A-Za-z]+$/,
                     message: "Provide a Valid Email",
                   },
+                  onBlur: (e) => setEmail(e.target.value),
                 })}
               />
               <label className="label">
@@ -107,6 +118,11 @@ const Login = () => {
                 )}
               </label>
             </div>
+            <p>
+              <small className="cursor-pointer">
+                <button onClick={handleForgotPassword}>Forget password?</button>
+              </small>
+            </p>
             {signInError}
             <input
               type="submit"

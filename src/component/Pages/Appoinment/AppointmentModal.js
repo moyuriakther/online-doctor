@@ -2,22 +2,38 @@ import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import auth from "../../../firebase.config";
 
 const AppointmentModal = ({ date, treatment, setTreatment }) => {
-  const [user, loading, error] = useAuthState(auth);
-  const { name, slots } = treatment;
+  const [user] = useAuthState(auth);
+  const { name, slots, _id } = treatment;
+  const formattedDate = format(date, "PP");
   const handleSubmit = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
-    const name = e.target.name.value;
     const phone = e.target.phone.value;
-    const email = e.target.email.value;
-    console.log(name, slot, phone, email);
+    const booking = {
+      treatmentId: _id,
+      treatmentName: name,
+      patientName: user.displayName,
+      patientEmail: user.email,
+      slot: slot,
+      phone: phone,
+      date: formattedDate,
+    };
+    axios.post("http://localhost:5000/booking", booking).then((res) => {
+      const data = res.data;
+      console.log(data);
+      if (data.success) {
+        toast(`Booking Successful on ${formattedDate} at ${slot}`);
+      } else {
+        toast.error(
+          `Already Have an appointment on ${data?.booking?.date} at ${data?.booking?.slot}`
+        );
+      }
+    });
     setTreatment(null);
-    axios
-      .post("http://localhost:5000/appointment")
-      .then((res) => console.log(res));
   };
   return (
     <div>
@@ -90,7 +106,7 @@ const AppointmentModal = ({ date, treatment, setTreatment }) => {
 
             <div className="">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 bg-gradient-to-r from-secondary to-primary text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow cursor-pointer appearance-none border rounded w-full py-2 px-3 bg-gradient-to-r from-secondary to-primary text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="submit"
                 type="submit"
                 value="SUBMIT"

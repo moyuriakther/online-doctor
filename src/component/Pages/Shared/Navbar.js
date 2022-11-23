@@ -5,8 +5,8 @@ import auth from "../../../firebase.config";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
-  const [signOut, signOutLoading, signOutError] = useSignOut(auth);
+  const [user, loading] = useAuthState(auth);
+  const [signOut, signOutLoading] = useSignOut(auth);
   if (loading || signOutLoading) {
     return <LoadingSpinner />;
   }

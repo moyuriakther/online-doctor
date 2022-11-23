@@ -8,6 +8,8 @@ import Login from "./component/Pages/Login/Login";
 import Register from "./component/Pages/Login/Register";
 import Appoinment from "./component/Pages/Appoinment/Appoinment";
 import RequireAuth from "./component/Pages/Login/RequireAuth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }
