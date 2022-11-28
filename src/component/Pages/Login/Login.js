@@ -9,6 +9,7 @@ import {
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import useToken from "../../../hook/useToken";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -16,6 +17,7 @@ const Login = () => {
     useSignInWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, rSending, rError] =
     useSendPasswordResetEmail(auth);
+  const [token] = useToken(gUser || eUser);
   const [email, setEmail] = useState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,10 +40,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (gUser || eUser) {
-      navigate(from, { replace: true });
+    if (token) {
+      // navigate(from, { replace: true });
     }
-  }, [gUser, eUser, from, navigate]);
+  }, [token, from, navigate]);
 
   let signInError;
   if (gError || eError || rError) {

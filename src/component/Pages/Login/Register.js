@@ -10,7 +10,7 @@ import {
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { clear } from "@testing-library/user-event/dist/clear";
+import useToken from "../../../hook/useToken";
 
 const Register = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -19,6 +19,7 @@ const Register = () => {
   const [updateProfile, pUpdating, pError] = useUpdateProfile(auth);
   const [sendEmailVerification, eVerifySending, eVerifyError] =
     useSendEmailVerification(auth);
+  const [token] = useToken(gUser || cUser);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -28,7 +29,6 @@ const Register = () => {
     handleSubmit,
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
     const success = await updateProfile({ displayName: data.name });
     const verifyEmail = await sendEmailVerification();
@@ -40,15 +40,13 @@ const Register = () => {
     }
   };
   useEffect(() => {
-    if (gUser || cUser) {
-      console.log(gUser, cUser);
-      navigate(from, { replace: true });
+    if (token) {
+      // navigate(from, { replace: true });
     }
-  }, [gUser, cUser, from, navigate]);
+  }, [navigate, token, from]);
 
   let signInError;
   if (gError || cError || pError || eVerifyError) {
-    console.log(gError, cError, pError, eVerifyError);
     signInError = (
       <p className="text-red-600">{gError?.message || cError?.message}</p>
     );

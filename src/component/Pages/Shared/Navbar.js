@@ -27,13 +27,20 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact Us</Link>
       </li>
+      {user && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
       <li>
         {user ? (
-          <Link onClick={signOut} to="/">
+          <Link className="btn btn-accent text-white" onClick={signOut} to="/">
             Sign Out
           </Link>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link className="btn btn-accent text-white" to="/login">
+            Login
+          </Link>
         )}
       </li>
     </>
@@ -60,7 +67,7 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow  bg-white text-black rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white text-black rounded-box w-52"
           >
             {menuItems}
           </ul>
@@ -71,6 +78,28 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+      </div>
+      <div className="navbar-end">
+        <label
+          tabIndex={1}
+          htmlFor="my-dashboard"
+          className="btn btn-ghost lg:hidden"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </label>
       </div>
     </div>
   );
