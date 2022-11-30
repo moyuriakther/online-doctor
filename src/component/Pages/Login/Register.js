@@ -39,11 +39,12 @@ const Register = () => {
       toast("Updated profile");
     }
   };
+
   useEffect(() => {
     if (token) {
-      // navigate(from, { replace: true });
+      navigate(from, { replace: true });
     }
-  }, [navigate, token, from]);
+  }, [token, navigate, from]);
 
   let signInError;
   if (gError || cError || pError || eVerifyError) {

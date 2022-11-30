@@ -7,6 +7,10 @@ import LoadingSpinner from "./LoadingSpinner";
 const Navbar = () => {
   const [user, loading] = useAuthState(auth);
   const [signOut, signOutLoading] = useSignOut(auth);
+  const handleSignOut = () => {
+    signOut();
+    localStorage.removeItem("accessToken");
+  };
   if (loading || signOutLoading) {
     return <LoadingSpinner />;
   }
@@ -34,7 +38,11 @@ const Navbar = () => {
       )}
       <li>
         {user ? (
-          <Link className="btn btn-accent text-white" onClick={signOut} to="/">
+          <Link
+            className="btn btn-accent text-white"
+            onClick={handleSignOut}
+            to="/"
+          >
             Sign Out
           </Link>
         ) : (

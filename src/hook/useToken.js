@@ -6,12 +6,15 @@ const useToken = (user) => {
   useEffect(() => {
     const email = user?.user?.email;
     const currentUser = { email: email };
-    axios
-      .put(`http://localhost:5000/user/email=${email}`, currentUser)
-      .then((res) => {
-        setToken(res.data);
-        console.log(res);
-      });
+    if (user) {
+      axios
+        .put(`http://localhost:5000/user/email=${email}`, currentUser)
+        .then((res) => {
+          const accessToken = res.data.token;
+          localStorage.setItem("accessToken", accessToken);
+          setToken(accessToken);
+        });
+    }
   }, [user]);
   return [token];
 };

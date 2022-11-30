@@ -1,22 +1,42 @@
 import axios from "axios";
+import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import auth from "../../../firebase.config";
 
 const MyAppointment = () => {
   const [myAppointments, setMyAppointment] = useState([]);
   const [user] = useAuthState(auth);
-  // console.log(myAppointments);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/booking?patientEmail=${user.email}`)
-        .then((data) => setMyAppointment(data.data));
+        .get(`http://localhost:5000/booking?patientEmail=${user.email}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((data) => {
+          // console.log(data.data);
+          setMyAppointment(data?.data);
+        })
+        .catch((error) => {
+          if (
+            error?.response?.status === 401 ||
+            error?.response?.status === 403
+          ) {
+            signOut(auth);
+            localStorage.removeItem("accessToken");
+            navigate("/");
+          }
+        });
     }
-  }, [user]);
+  }, [user, navigate]);
   return (
     <div>
-      <h1 className="text-2xl my-4">My Appointment {myAppointments.length}</h1>
+      <h1 className="text-2xl my-4">My Appointment {myAppointments?.length}</h1>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
