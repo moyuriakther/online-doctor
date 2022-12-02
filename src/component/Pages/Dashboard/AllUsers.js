@@ -43,7 +43,6 @@ const AllUsers = () => {
           headers,
         })
         .then((data) => {
-          console.log(data.data);
           if (data.data.modifiedCount > 0) {
             refetch();
             toast("Successfully Make an admin");

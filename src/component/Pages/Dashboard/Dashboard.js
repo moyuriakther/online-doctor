@@ -11,14 +11,14 @@ const Dashboard = () => {
     <div className="drawer drawer-mobile">
       <input id="my-dashboard" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <h1 className="text-2xl font-bold text-secondary">
+        {/* <h1 className="text-2xl font-bold text-secondary">
           Welcome To Your Dashboard
-        </h1>
+        </h1> */}
         <Outlet />
       </div>
       <div className="drawer-side">
         <label htmlFor="my-dashboard" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-48 bg-base-100 text-base-content">
+        <ul className="menu p-4 w-56 bg-base-100 text-base-content">
           {/* <!-- Sidebar content here --> */}
           <li>
             <Link to="/dashboard">My Appointments</Link>
@@ -30,9 +30,14 @@ const Dashboard = () => {
             <Link to="/dashboard/history">My History</Link>
           </li>
           {admin && (
-            <li>
-              <Link to="/dashboard/users">All Users</Link>
-            </li>
+            <>
+              <li>
+                <Link to="/dashboard/users">All Users</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/addDoctor">Add Doctors</Link>
+              </li>
+            </>
           )}
         </ul>
       </div>

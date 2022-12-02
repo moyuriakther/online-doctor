@@ -9,7 +9,6 @@ const useAdmin = (user) => {
     axios
       .get(`http://localhost:5000/admin/${email}`)
       .then((res) => {
-        console.log(res.data.admin);
         setAdmin(res.data.admin);
         setLoadingAdmin(false);
       })
