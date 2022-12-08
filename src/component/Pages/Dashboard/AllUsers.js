@@ -99,9 +99,6 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
-      {/* {users.map((user, index) => (
-        <User user={user} key={user._id} index={index} refetch={refetch} />
-      ))} */}
     </div>
   );
 };

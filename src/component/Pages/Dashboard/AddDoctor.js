@@ -33,7 +33,11 @@ const AddDoctor = () => {
         image: imageUrl,
       };
       axios
-        .post(`http://localhost:5000/doctors`, doctor)
+        .post(`http://localhost:5000/doctors`, doctor, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
         .then((res) => {
           const result = res.data;
           console.log(result);
