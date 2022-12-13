@@ -7,7 +7,7 @@ import auth from "../../../firebase.config";
 
 const AppointmentModal = ({ date, treatment, setTreatment, refetch }) => {
   const [user] = useAuthState(auth);
-  const { name, slots, _id } = treatment;
+  const { name, slots, _id, price } = treatment;
   const formattedDate = format(date, "PP");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +19,7 @@ const AppointmentModal = ({ date, treatment, setTreatment, refetch }) => {
       patientName: user.displayName,
       patientEmail: user.email,
       slot: slot,
+      price: price,
       phone: phone,
       date: formattedDate,
     };
