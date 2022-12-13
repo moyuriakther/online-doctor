@@ -17,8 +17,8 @@ import MyHistory from "./component/Pages/Dashboard/MyHistory";
 import AllUsers from "./component/Pages/Dashboard/AllUsers";
 import RequireAdmin from "./component/Pages/Login/RequireAdmin";
 import AddDoctor from "./component/Pages/Dashboard/AddDoctor";
-import ManageDoctors from "./component/Pages/Dashboard/ManageDoctors";
 import Payment from "./component/Pages/Dashboard/Payment";
+import ManageDoctors from "./component/Pages/Dashboard/ManageDoctors";
 
 function App() {
   return (
