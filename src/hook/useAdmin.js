@@ -7,7 +7,7 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user.email;
     axios
-      .get(`https://online-doctor-1.web.app/admin/${email}`)
+      .get(`https://online-doctor.onrender.com/admin/${email}`)
       .then((res) => {
         setAdmin(res.data.admin);
         setLoadingAdmin(false);

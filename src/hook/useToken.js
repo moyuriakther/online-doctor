@@ -8,7 +8,10 @@ const useToken = (user) => {
     const currentUser = { email: email };
     if (user) {
       axios
-        .put(`https://online-doctor-1.web.app/user/email=${email}`, currentUser)
+        .put(
+          `https://online-doctor.onrender.com/user/email=${email}`,
+          currentUser
+        )
         .then((res) => {
           const accessToken = res.data.token;
           localStorage.setItem("accessToken", accessToken);
