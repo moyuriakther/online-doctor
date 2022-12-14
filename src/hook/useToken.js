@@ -8,7 +8,7 @@ const useToken = (user) => {
     const currentUser = { email: email };
     if (user) {
       axios
-        .put(`http://localhost:5000/user/email=${email}`, currentUser)
+        .put(`https://online-doctor-1.web.app/user/email=${email}`, currentUser)
         .then((res) => {
           const accessToken = res.data.token;
           localStorage.setItem("accessToken", accessToken);

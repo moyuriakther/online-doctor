@@ -13,11 +13,14 @@ const MyAppointment = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/booking?patientEmail=${user.email}`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
+        .get(
+          `https://online-doctor.onrender.com/booking?patientEmail=${user.email}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
         .then((data) => {
           // console.log(data.data);
           setMyAppointment(data?.data);
@@ -70,7 +73,7 @@ const MyAppointment = () => {
                         <span className="text-green-500 font-bold">Paid</span>
                       </p>
                       <p>
-                        Transaction Id: 
+                        Transaction Id:
                         <span className="text-green-500 font-bold">
                           <small>{a.transactionId}</small>
                         </span>

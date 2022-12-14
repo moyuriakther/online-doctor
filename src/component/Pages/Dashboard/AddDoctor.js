@@ -8,7 +8,7 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 const AddDoctor = () => {
   const { data: allAppointment, isLoading } = useQuery(["allAppointment"], () =>
     axios
-      .get("http://localhost:5000/appointments")
+      .get("https://online-doctor.onrender.com/appointments")
       .then((res) => res.data)
       .catch((err) => console.log(err))
   );
@@ -33,7 +33,7 @@ const AddDoctor = () => {
         image: imageUrl,
       };
       axios
-        .post(`http://localhost:5000/doctors`, doctor, {
+        .post(`https://online-doctor.onrender.com/doctors`, doctor, {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },

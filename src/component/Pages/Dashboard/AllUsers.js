@@ -15,7 +15,7 @@ const AllUsers = () => {
     refetch,
   } = useQuery(["users"], () =>
     axios
-      .get("http://localhost:5000/user", {
+      .get("https://online-doctor.onrender.com/user", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -39,9 +39,13 @@ const AllUsers = () => {
     };
     if (user) {
       axios
-        .put(`http://localhost:5000/user/admin/${currentEmail}`, userData, {
-          headers,
-        })
+        .put(
+          `https://online-doctor.onrender.com/user/admin/${currentEmail}`,
+          userData,
+          {
+            headers,
+          }
+        )
         .then((data) => {
           if (data.data.modifiedCount > 0) {
             refetch();

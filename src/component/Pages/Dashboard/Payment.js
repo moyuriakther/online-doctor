@@ -15,7 +15,7 @@ const Payment = () => {
   const { id } = useParams();
   const { data: patient, isLoading } = useQuery(["doctors", id], () =>
     axios
-      .get(`http://localhost:5000/booking/${id}`, {
+      .get(`https://online-doctor.onrender.com/booking/${id}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

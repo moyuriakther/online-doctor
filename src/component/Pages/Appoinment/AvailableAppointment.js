@@ -15,7 +15,7 @@ const AvailableAppointment = ({ date }) => {
     refetch,
   } = useQuery(["available", formattedDate], () =>
     axios
-      .get(`http://localhost:5000/available?date=${formattedDate}`)
+      .get(`https://online-doctor.onrender.com/available?date=${formattedDate}`)
       .then((res) => res.data)
   );
   if (isLoading) {

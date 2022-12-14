@@ -23,17 +23,19 @@ const AppointmentModal = ({ date, treatment, setTreatment, refetch }) => {
       phone: phone,
       date: formattedDate,
     };
-    axios.post("http://localhost:5000/booking", booking).then((res) => {
-      const data = res.data;
-      console.log(data);
-      if (data.success) {
-        toast(`Booking Successful on ${formattedDate} at ${slot}`);
-      } else {
-        toast.error(
-          `Already Have an appointment on ${data?.booking?.date} at ${data?.booking?.slot}`
-        );
-      }
-    });
+    axios
+      .post("https://online-doctor.onrender.com/booking", booking)
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        if (data.success) {
+          toast(`Booking Successful on ${formattedDate} at ${slot}`);
+        } else {
+          toast.error(
+            `Already Have an appointment on ${data?.booking?.date} at ${data?.booking?.slot}`
+          );
+        }
+      });
     refetch();
     setTreatment(null);
   };

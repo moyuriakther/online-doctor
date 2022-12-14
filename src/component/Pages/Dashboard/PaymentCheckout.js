@@ -13,11 +13,15 @@ const PaymentCheckout = ({ patient }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/create-payment-intent", patient, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      .post(
+        "https://online-doctor.onrender.com/create-payment-intent",
+        patient,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
       .then((response) => {
         const secret = response?.data?.clientSecret;
         if (secret) {
@@ -70,11 +74,15 @@ const PaymentCheckout = ({ patient }) => {
         transactionId: paymentIntent?.id,
       };
       axios
-        .patch(`http://localhost:5000/booking/${patient._id}`, payment, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
+        .patch(
+          `https://online-doctor.onrender.com/booking/${patient._id}`,
+          payment,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           setProcessing(false);

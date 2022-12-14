@@ -13,7 +13,7 @@ const ManageDoctors = () => {
     refetch,
   } = useQuery(["doctors"], () =>
     axios
-      .get("http://localhost:5000/doctors", {
+      .get("https://online-doctor.onrender.com/doctors", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

@@ -6,7 +6,7 @@ const DeleteConfirmModal = ({ refetch, setConfirmDelete, confirmDelete }) => {
   const { email, name } = confirmDelete;
   const handleDeleteDoctor = () => {
     axios
-      .delete(`http://localhost:5000/doctors/${email}`, {
+      .delete(`https://online-doctor.onrender.com/doctors/${email}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
