@@ -33,7 +33,6 @@ const Payment = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col">
         <div className="card bg-base-100 shadow-xl">
-          <h1>{id}</h1>
           <div className="card-body">
             <p className="text-secondary font-bold">
               Hello {patient?.patientName}
